@@ -14,46 +14,72 @@ function onRequestHandler() {
         resultado.innerHTML = ``
 
 
+
+        /////le da ubicacion de las imagenes
+        const Referencia_1 = document.querySelector('.carousel-item')
+        const Referencia_2 = document.querySelector('.carousel-item-2')
+        // crea el nodo que se insertara
+        const nodo = document.createElement('img')
+        /// se inserta el nodo
+        Referencia_1.insertAdjacentElement('afterbegin',nodo)
+
+        /// inserta las leyendas
+        const text_1 =document.createElement('h1')
+        const text_2 =document.createElement('h2')
+        /// se inserta el nodo
+        Referencia_1.insertAdjacentElement('beforeend',text_1)
+        Referencia_1.insertAdjacentElement('beforeend',text_2)
+
+
         // Carga la informacion en un array nuevo
         const newArray_2 = data.map(item => item );
         console.log('new array_2', newArray_2);
 
         const Back_Packs = newArray_2.filter(item_Packs => item_Packs.id===1)
+
+
         for(let Packs of Back_Packs){
-            resultado.innerHTML += `
-            <img class="carousel-item__img" 
-            src="${Packs.image}" 
-            alt=""/>
-            <h1> categoria: ${Packs.category}</h1>
-            <h2> precio: ${Packs.price}</h2>
-            `;
+            nodo.src = Packs.image,
+            nodo.width = 120,
+            text_1.textContent= Packs.category,
+            text_2.textContent= Packs.price;
+            // resultado.innerHTML += `
+            // <img class="carousel-item__img" 
+            // src="${Packs.image}" 
+            // alt=""/>
+            // <h1> categoria: ${Packs.category}</h1>
+            // <h2> precio: ${Packs.price}</h2>
+            // `;
         }
 
-        const men = newArray_2.filter(item_men => item_men.id > 1 && item_men.category==="men's clothing" )
+        // const men = newArray_2.filter(item_men => item_men.id > 1 && item_men.category==="men's clothing" )
 
-        for(let item_2 of men){
-            resultado.innerHTML += `
-            <img class="carousel-item__img" 
-            src="${item_2.image}" 
-            alt=""/>
-            <h1> categoria: ${item_2.category}</h1>
-            <h2> precio: ${item_2.price}</h2>
-            `;
-        }
+        // for(let item_2 of men){
+        //     resultado.innerHTML += `
+        //     <img class="carousel-item__img" 
+        //     src="${item_2.image}" 
+        //     alt=""/>
+        //     <h1> categoria: ${item_2.category}</h1>
+        //     <h2> precio: ${item_2.price}</h2>
+        //     `;
+        // }
 
-        const women = newArray_2.filter(item_men => item_men.category==="women's clothing")
-        for(let item_2 of women){
-            resultado.innerHTML += `
-            <h1>women's clothing /// :3 </h1>
-            <img class="carousel-item__img" 
-            src="${item_2.image}" 
-            alt=""/>
-            <h1> categoria: ${item_2.category}</h1>
-            <h2> precio: ${item_2.price}</h2>
-            `;
-        }
+        
+        // const women = newArray_2.filter(item_men => item_men.category==="women's clothing")
+        
+        // resultado.innerHTML +=`<h1>//cosas de chicas//</h1>`;
 
+        // for(let item_2 of women){
+        //     resultado.innerHTML += `
+        //     <img class="carousel-item__img" 
+        //     src="${item_2.image}" 
+        //     alt=""/>
+        //     <h1> categoria: ${item_2.category}</h1>
+        //     <h2> precio: ${item_2.price}</h2>
+        //     `;
+        // }
 
+/////////////////////// codigo no funcional ///////////////////
 
         
         // const newArray_1 = [];
