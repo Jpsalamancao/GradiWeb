@@ -1,6 +1,9 @@
+
 const API_URL = "https://fakestoreapi.com";    // url del api
 const xhr = new XMLHttpRequest();              //consultamos con ajax
 
+const APP_carrosel_1 = document.querySelector("#app_1")
+const APP_carrosel_2 = document.querySelector("#app_2")
 function onRequestHandler() {
     if(this.readyState == 4 && this.status ==200){
         // 0= USET, NOSE HA LLAMADO AL METODO OPEN
@@ -8,49 +11,113 @@ function onRequestHandler() {
         // 2= hEADERS_RECEIEVED, SE ESTA LLAMANDO AL METODO SEND()
         // 3= LOADING, ESTA CARGANDO, ES DECIR, ESTA RECIBIENDO LA RESPUESTA
         // 4 = DONE, se ha completado la operacion
-        const data = JSON.parse(this.response); 
-        console.log(data);
-        const resultado = document.querySelector("#app");
-        resultado.innerHTML = ``
+
+        //Recibe los datos
+        const data_API = JSON.parse(this.response);
+
+        const Back_Packs = data_API.filter((item_Packs) => item_Packs.category =="men's clothing")
+        console.log('new array_2', Back_Packs);
+              
+        
+        const todosLosItems =[]
+        Back_Packs.forEach((item) => {
+            //crear la imagen
+            const imagen = document.createElement('img');
+            imagen.src=`${item.image}`,
+            imagen.className="imagen";
+            //crear el titulo
+            const title = document.createElement("p2");
+            title.textContent=`Description: ${item.title}`,
+            title.className="titulo";
+            //crear el precio
+            const precio = document.createElement("h2");
+            precio.textContent= `precio: ${item.price}`,
+            precio.className="precio";
+
+            //contenedor 
+            const container = document.createElement('div')
+            container.className="contenedor",
+            container.append(imagen, title, precio);
+
+            //se empujan los datos al array vacio
+            todosLosItems.push(container);              
+        });
+        app_1.append(...todosLosItems);
+
+
+        const women = data_API.filter((item_women) => item_women.category =="women's clothing")
+        console.log('new array_2', women);
+
+        const todosLoswomen =[]
+        women.forEach((item) => {
+            //crear la imagen
+            const imagen = document.createElement('img');
+            imagen.src=`${item.image}`,
+            imagen.className="imagen";
+            //crear el titulo
+            const title = document.createElement("p2");
+            title.textContent=`Description: ${item.title}`,
+            title.className="titulo";
+            //crear el precio
+            const precio = document.createElement("h2");
+            precio.textContent= `precio: ${item.price}`,
+            precio.className="precio";
+
+            //contenedor 
+            const container = document.createElement('div')
+            container.className="contenedor",
+            container.append(imagen, title, precio);
+
+            //se empujan los datos al array vacio
+            todosLoswomen.push(container);              
+        });
+        app_2.append(...todosLoswomen);
+
+    
+    }
+}
+xhr.addEventListener("load",onRequestHandler); // ejecuta la funcion
+xhr.open('GET',`${API_URL}/products`);
+xhr.send();
 
 
 
-        /////le da ubicacion de las imagenes
-        const Referencia_1 = document.querySelector('.carousel-item')
-        const Referencia_2 = document.querySelector('.carousel-item-2')
-        // crea el nodo que se insertara
-        const nodo = document.createElement('img')
-        /// se inserta el nodo
-        Referencia_1.insertAdjacentElement('afterbegin',nodo)
 
-        /// inserta las leyendas
-        const text_1 =document.createElement('h1')
-        const text_2 =document.createElement('h2')
-        /// se inserta el nodo
-        Referencia_1.insertAdjacentElement('beforeend',text_1)
-        Referencia_1.insertAdjacentElement('beforeend',text_2)
+        // /////le da ubicacion de las imagenes
+        // const Referencia_1 = document.querySelector('.carousel-item')
+        // // crea el nodo que se insertara
+        // const nodo = document.createElement('img')
+        // /// se inserta el nodo
+        // Referencia_1.insertAdjacentElement('afterbegin',nodo)
 
-
-        // Carga la informacion en un array nuevo
-        const newArray_2 = data.map(item => item );
-        console.log('new array_2', newArray_2);
-
-        const Back_Packs = newArray_2.filter(item_Packs => item_Packs.id===1)
+        // /// inserta las leyendas
+        // const text_1 =document.createElement('h1')
+        // const text_2 =document.createElement('h2')
+        // /// se inserta el nodo
+        // Referencia_1.insertAdjacentElement('beforeend',text_1)
+        // Referencia_1.insertAdjacentElement('beforeend',text_2)
 
 
-        for(let Packs of Back_Packs){
-            nodo.src = Packs.image,
-            nodo.width = 120,
-            text_1.textContent= Packs.category,
-            text_2.textContent= Packs.price;
-            // resultado.innerHTML += `
-            // <img class="carousel-item__img" 
-            // src="${Packs.image}" 
-            // alt=""/>
-            // <h1> categoria: ${Packs.category}</h1>
-            // <h2> precio: ${Packs.price}</h2>
-            // `;
-        }
+        // // Carga la informacion en un array nuevo
+        // const newArray_2 = data.map(item => item );
+        // console.log('new array_2', newArray_2);
+
+        // const Back_Packs = newArray_2.filter(item_Packs => item_Packs.id===1)
+
+
+        // for(let Packs of Back_Packs){
+        //     nodo.src = Packs.image,
+        //     nodo.width = 120,
+        //     text_1.textContent= Packs.category,
+        //     text_2.textContent= Packs.price;
+        //     // resultado.innerHTML += `
+        //     // <img class="carousel-item__img" 
+        //     // src="${Packs.image}" 
+        //     // alt=""/>
+        //     // <h1> categoria: ${Packs.category}</h1>
+        //     // <h2> precio: ${Packs.price}</h2>
+        //     // `;
+        // }
 
         // const men = newArray_2.filter(item_men => item_men.id > 1 && item_men.category==="men's clothing" )
 
@@ -100,9 +167,3 @@ function onRequestHandler() {
         //const tpl= data.map((products) =>products.image);
         //HTMLResponse.innerHTML = `<img src="${tpl}" width="100px">`;
 
-    }
-}
-xhr.addEventListener("load",onRequestHandler); // ejecuta la funcion
-xhr.open('GET',`${API_URL}/products`);
-xhr.send();
-//https://fakestoreapi.com/products/1
